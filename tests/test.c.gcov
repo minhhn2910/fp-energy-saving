@@ -1,0 +1,40 @@
+        -:    0:Source:test.c
+        -:    0:Graph:test.gcno
+        -:    0:Data:test.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include <stdio.h>
+        -:    2:#include <gmp.h>
+        -:    3:#include <mpfr.h> 	
+        1:    4:int main (int argc, char **argv)
+        -:    5:{
+        1:    6:	if (argc < 2)
+        -:    7:	{
+    #####:    8:		printf("Usage ./test num_of_loops \n");
+    #####:    9:		return 0;
+        -:   10:	}
+        1:   11:	int loop = atoi(argv[1]);
+        -:   12:  unsigned int i;
+        -:   13:  mpfr_t s, t, u;
+        -:   14:	
+        1:   15:  mpfr_init2 (t, 200);
+        1:   16:  mpfr_set_d (t, 1.0, MPFR_RNDD);
+        1:   17:  mpfr_init2 (s, 200);
+        1:   18:  mpfr_set_d (s, 1.0, MPFR_RNDD);
+        1:   19:  mpfr_init2 (u, 200);
+     1001:   20:  for (i = 1; i <= loop; i++)
+        -:   21:    {
+     1000:   22:      mpfr_mul_ui (t, t, i, MPFR_RNDU);
+     1000:   23:      mpfr_set_d (u, 1.0, MPFR_RNDD);
+     1000:   24:      mpfr_div (u, u, t, MPFR_RNDD);
+     1000:   25:      mpfr_add (s, s, u, MPFR_RNDD);
+        -:   26:    }
+        1:   27:  printf ("Sum is ");
+        1:   28:  mpfr_out_str (stdout, 10, 0, s, MPFR_RNDD);
+        1:   29:  putchar ('\n');
+        1:   30:  mpfr_clear (s);
+        1:   31:  mpfr_clear (t);
+        1:   32:  mpfr_clear (u);
+        1:   33:  return 0;
+        -:   34:}
+        -:   35:
